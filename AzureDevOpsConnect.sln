@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28902.138
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureDevOpsConnect", "AzureDevOpsConnect\AzureDevOpsConnect.csproj", "{8B2810A8-6C65-4F12-8BA8-2E7E71807D75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureDevOpsConnect", "AzureDevOpsConnect\AzureDevOpsConnect.csproj", "{8B2810A8-6C65-4F12-8BA8-2E7E71807D75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureDevOpsConnectionNetFramework", "AzureDevOpsConnectionNetFramework\AzureDevOpsConnectionNetFramework.csproj", "{F1A0F47F-B573-4E9A-8B03-8E3BB3488E73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8B2810A8-6C65-4F12-8BA8-2E7E71807D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B2810A8-6C65-4F12-8BA8-2E7E71807D75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B2810A8-6C65-4F12-8BA8-2E7E71807D75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1A0F47F-B573-4E9A-8B03-8E3BB3488E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A0F47F-B573-4E9A-8B03-8E3BB3488E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A0F47F-B573-4E9A-8B03-8E3BB3488E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A0F47F-B573-4E9A-8B03-8E3BB3488E73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
