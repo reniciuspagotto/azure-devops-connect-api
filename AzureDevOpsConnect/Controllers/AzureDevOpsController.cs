@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AzureDevOps.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace AzureDevOpsConnect.Controllers
+namespace AzureDevOpsConnectNetCore.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -19,17 +21,30 @@ namespace AzureDevOpsConnect.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Queue")]
-        public IActionResult Get()
+        public IActionResult Get(DevOpsParameters data)
         {
             try
             {
-                var json = JsonConvert.SerializeObject(new { definition = new { id = "{Número da build a ser executada}" } });
-                var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+                // Informações sobre o pipeline de execução
+                var personalaccesstoken = _configuration.GetSection("PersonalToken").Value;
+                var organizationDevOps = _configuration.GetSection("OrganizationDevOps").Value;
+                var projectDevOps = _configuration.GetSection("ProjectDevOps").Value;
+                var buildNumber = _configuration.GetSection("BuildNumber").Value;
 
-                // Obtem o token pessoal fornecido pelo AzureDevOps e que está no app.settings
-                var personalaccesstoken = _configuration.GetSection("AzurePersonalToken").Value;
+                var parameters = new Dictionary<string, string>
+                {
+                    { "projectname", data.ProjectName }
+                };
+
+                var appRequest = new DevOpsInfo
+                {
+                    Definition = new BuildDefinition(128),
+                    Parameters = JsonConvert.SerializeObject(parameters),
+                };
+
+                var stringContent = new StringContent(JsonConvert.SerializeObject(appRequest), Encoding.UTF8, "application/json");
 
                 using (HttpClient client = new HttpClient())
                 {
@@ -38,7 +53,7 @@ namespace AzureDevOpsConnect.Controllers
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(
                         Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", personalaccesstoken))));
 
-                    using (HttpResponseMessage response = client.PostAsync("https://dev.azure.com/{Organization}/{Project}/_apis/build/builds?api-version=5.0", stringContent).Result)
+                    using (HttpResponseMessage response = client.PostAsync($"https://dev.azure.com/{organizationDevOps}/{projectDevOps}/_apis/build/builds?api-version=5.0", stringContent).Result)
                     {
                         response.EnsureSuccessStatusCode();
                         string responseBody = response.Content.ReadAsStringAsync().Result;
